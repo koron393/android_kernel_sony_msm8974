@@ -1982,6 +1982,19 @@ config CPU_VOLTAGE_TABLE
 	help
 	  DTS based kernel User Votlage Control
 
+config CPU_OC
+	bool "allow 2.3 GHz OC bin"
+	default n
+	help
+	  Unlock the CPU Overclock freq speed @ 2.3 GHz
+
+config OC_ULTIMATE
+	bool "allow 2.419 GHz max OC option"
+	depends on CPU_OC
+	default n
+	help
+	  Unlock the ultimate Overclock freq speed @ 2.419 GHz
+
 config MSM_AVS_HW
 	bool "Enable Adaptive Voltage Scaling (AVS)"
 	default n
