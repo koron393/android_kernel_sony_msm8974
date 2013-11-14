@@ -92,7 +92,7 @@ static struct genl_family *genl_family_find_byname(char *name)
 	return NULL;
 }
 
-static struct genl_ops *genl_get_cmd(u8 cmd, struct genl_family *family)
+static const struct genl_ops *genl_get_cmd(u8 cmd, struct genl_family *family)
 {
 	int i;
 
@@ -269,7 +269,8 @@ static void genl_unregister_mc_groups(struct genl_family *family)
 		__genl_unregister_mc_group(family, grp);
 }
 
-static int genl_validate_add_ops(struct genl_family *family, struct genl_ops *ops,
+static int genl_validate_add_ops(struct genl_family *family,
+				 const struct genl_ops *ops,
 				 unsigned int n_ops)
 {
 	int i, j;
@@ -280,12 +281,6 @@ static int genl_validate_add_ops(struct genl_family *family, struct genl_ops *op
 		for (j = i + 1; j < n_ops; j++)
 			if (ops[i].cmd == ops[j].cmd)
 				return -EINVAL;
-		if (ops[i].dumpit)
-			ops[i].flags |= GENL_CMD_CAP_DUMP;
-		if (ops[i].doit)
-			ops[i].flags |= GENL_CMD_CAP_DO;
-		if (ops[i].policy)
-			ops[i].flags |= GENL_CMD_CAP_HASPOL;
 	}
 
 	/* family is not registered yet, so no locking needed */
@@ -385,7 +380,7 @@ EXPORT_SYMBOL(__genl_register_family);
  * Return 0 on success or a negative error code.
  */
 int __genl_register_family_with_ops(struct genl_family *family,
-	struct genl_ops *ops, size_t n_ops)
+	const struct genl_ops *ops, size_t n_ops)
 {
 	int err;
 
@@ -465,7 +460,7 @@ EXPORT_SYMBOL(genlmsg_put);
 
 static int genl_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 {
-	struct genl_ops *ops;
+	const struct genl_ops *ops;
 	struct genl_family *family;
 	struct net *net = sock_net(skb->sk);
 	struct genl_info info;
@@ -586,7 +581,15 @@ static int ctrl_fill_info(struct genl_family *family, u32 pid, u32 seq,
 
 		for (i = 0; i < family->n_ops; i++) {
 			struct nlattr *nest;
-			struct genl_ops *ops = &family->ops[i];
+			const struct genl_ops *ops = &family->ops[i];
+			u32 flags = ops->flags;
+
+			if (ops->dumpit)
+				flags |= GENL_CMD_CAP_DUMP;
+			if (ops->doit)
+				flags |= GENL_CMD_CAP_DO;
+			if (ops->policy)
+				flags |= GENL_CMD_CAP_HASPOL;
 
 			nest = nla_nest_start(skb, i + 1);
 			if (nest == NULL)
