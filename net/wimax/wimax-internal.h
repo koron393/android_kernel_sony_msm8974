@@ -85,7 +85,6 @@ extern int wimax_rfkill_add(struct wimax_dev *);
 extern void wimax_rfkill_rm(struct wimax_dev *);
 
 extern struct genl_family wimax_gnl_family;
-extern struct genl_multicast_group wimax_gnl_mcg;
 
 #endif /* #ifdef __KERNEL__ */
 #endif /* #ifndef __WIMAX_INTERNAL_H__ */

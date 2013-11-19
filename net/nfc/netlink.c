@@ -29,8 +29,8 @@
 
 #include "nfc.h"
 
-static struct genl_multicast_group nfc_genl_event_mcgrp = {
-	.name = NFC_GENL_MCAST_EVENT_NAME,
+static const struct genl_multicast_group nfc_genl_mcgrps[] = {
+	{ .name = NFC_GENL_MCAST_EVENT_NAME, },
 };
 
 struct genl_family nfc_genl_family = {
@@ -174,7 +174,7 @@ int nfc_genl_targets_found(struct nfc_dev *dev)
 
 	genlmsg_end(msg, hdr);
 
-	return genlmsg_multicast(&nfc_genl_family, msg, 0, nfc_genl_event_mcgrp.id, GFP_ATOMIC);
+	return genlmsg_multicast(&nfc_genl_family, msg, 0, 0, GFP_ATOMIC);
 
 nla_put_failure:
 	genlmsg_cancel(msg, hdr);
@@ -204,7 +204,7 @@ int nfc_genl_device_added(struct nfc_dev *dev)
 
 	genlmsg_end(msg, hdr);
 
-	genlmsg_multicast(&nfc_genl_family, msg, 0, nfc_genl_event_mcgrp.id, GFP_KERNEL);
+	genlmsg_multicast(&nfc_genl_family, msg, 0, 0, GFP_KERNEL);
 
 	return 0;
 
@@ -233,7 +233,7 @@ int nfc_genl_device_removed(struct nfc_dev *dev)
 
 	genlmsg_end(msg, hdr);
 
-	genlmsg_multicast(&nfc_genl_family, msg, 0, nfc_genl_event_mcgrp.id, GFP_KERNEL);
+	genlmsg_multicast(&nfc_genl_family, msg, 0, 0, GFP_KERNEL);
 
 	return 0;
 
@@ -349,7 +349,7 @@ int nfc_genl_dep_link_up_event(struct nfc_dev *dev, u32 target_idx,
 
 	dev->dep_link_up = true;
 
-	genlmsg_multicast(&nfc_genl_family, msg, 0, nfc_genl_event_mcgrp.id, GFP_ATOMIC);
+	genlmsg_multicast(&nfc_genl_family, msg, 0, 0, GFP_ATOMIC);
 
 	return 0;
 
@@ -380,7 +380,7 @@ int nfc_genl_dep_link_down_event(struct nfc_dev *dev)
 
 	genlmsg_end(msg, hdr);
 
-	genlmsg_multicast(&nfc_genl_family, msg, 0, nfc_genl_event_mcgrp.id, GFP_ATOMIC);
+	genlmsg_multicast(&nfc_genl_family, msg, 0, 0, GFP_ATOMIC);
 
 	return 0;
 
@@ -689,15 +689,15 @@ int __init nfc_genl_init(void)
 {
 	int rc;
 
-	rc = genl_register_family_with_ops(&nfc_genl_family, nfc_genl_ops);
+	rc = genl_register_family_with_ops_groups(&nfc_genl_family,
+						  nfc_genl_ops,
+						  nfc_genl_mcgrps);
 	if (rc)
 		return rc;
 
-	rc = genl_register_mc_group(&nfc_genl_family, &nfc_genl_event_mcgrp);
-
 	netlink_register_notifier(&nl_notifier);
 
-	return rc;
+	return 0;
 }
 
 /**
