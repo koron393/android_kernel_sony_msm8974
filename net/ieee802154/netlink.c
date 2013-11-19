@@ -113,7 +113,7 @@ int __init ieee802154_nl_init(void)
 {
 	int rc;
 
-	rc = genl_register_family(&nl802154_family);
+	rc = genl_register_family_with_ops(&nl802154_family, ieee8021154_ops);
 	if (rc)
 		goto fail;
 

@@ -352,8 +352,7 @@ static int __init init_net_drop_monitor(void)
 	}
 
 	rc = genl_register_family_with_ops(&net_drop_monitor_family,
-					   dropmon_ops,
-					   ARRAY_SIZE(dropmon_ops));
+					   dropmon_ops);
 	if (rc) {
 		printk(KERN_ERR "Could not create drop monitor netlink family\n");
 		return rc;
