@@ -1515,25 +1515,9 @@ static struct genl_multicast_group team_change_event_mcgrp = {
 
 static int team_nl_send_event_options_get(struct team *team)
 {
-	struct sk_buff *skb;
-	int err;
-	struct net *net = dev_net(team->dev);
-
-	skb = nlmsg_new(NLMSG_GOODSIZE, GFP_KERNEL);
-	if (!skb)
-		return -ENOMEM;
-
-	err = team_nl_fill_options_get(skb, 0, 0, 0, team, false);
-	if (err < 0)
-		goto err_fill;
-
-	err = genlmsg_multicast_netns(net, skb, 0, team_change_event_mcgrp.id,
-				      GFP_KERNEL);
-	return err;
-
-err_fill:
-	nlmsg_free(skb);
-	return err;
+	return genlmsg_multicast_netns(&team_nl_family, dev_net(team->dev),
+				       skb, 0, team_change_event_mcgrp.id,
+				       GFP_KERNEL);
 }
 
 static int team_nl_send_event_port_list_get(struct team *team)

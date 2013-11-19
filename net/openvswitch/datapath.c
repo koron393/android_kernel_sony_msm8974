@@ -989,11 +989,11 @@ static int ovs_flow_cmd_new_or_set(struct sk_buff *skb, struct genl_info *info)
 	}
 
 	if (!IS_ERR(reply))
-		genl_notify(reply, genl_info_net(info), info->snd_pid,
+		genl_notify(&dp_flow_genl_family, reply, genl_info_net(info), info->snd_pid,
 			   ovs_dp_flow_multicast_group.id, info->nlhdr,
 			   GFP_KERNEL);
 	else
-		netlink_set_err(init_net.genl_sock, 0,
+		netlink_set_err(&dp_flow_genl_family, init_net.genl_sock, 0,
 				ovs_dp_flow_multicast_group.id, PTR_ERR(reply));
 	return 0;
 
@@ -1077,7 +1077,7 @@ static int ovs_flow_cmd_del(struct sk_buff *skb, struct genl_info *info)
 
 	ovs_flow_deferred_free(flow);
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_flow_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_flow_multicast_group.id, info->nlhdr, GFP_KERNEL);
 	return 0;
 }
@@ -1287,7 +1287,7 @@ static int ovs_dp_cmd_new(struct sk_buff *skb, struct genl_info *info)
 	list_add_tail(&dp->list_node, &dps);
 	rtnl_unlock();
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_datapath_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_datapath_multicast_group.id, info->nlhdr,
 		    GFP_KERNEL);
 	return 0;
@@ -1344,7 +1344,7 @@ static int ovs_dp_cmd_del(struct sk_buff *skb, struct genl_info *info)
 	call_rcu(&dp->rcu, destroy_dp_rcu);
 	module_put(THIS_MODULE);
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_datapath_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_datapath_multicast_group.id, info->nlhdr,
 		    GFP_KERNEL);
 
@@ -1369,12 +1369,12 @@ static int ovs_dp_cmd_set(struct sk_buff *skb, struct genl_info *info)
 				      info->snd_seq, OVS_DP_CMD_NEW);
 	if (IS_ERR(reply)) {
 		err = PTR_ERR(reply);
-		netlink_set_err(init_net.genl_sock, 0,
+		netlink_set_err(&dp_datapath_genl_family, init_net.genl_sock, 0,
 				ovs_dp_datapath_multicast_group.id, err);
 		return 0;
 	}
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_datapath_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_datapath_multicast_group.id, info->nlhdr,
 		    GFP_KERNEL);
 
@@ -1451,7 +1451,7 @@ static const struct nla_policy vport_policy[OVS_VPORT_ATTR_MAX + 1] = {
 	[OVS_VPORT_ATTR_OPTIONS] = { .type = NLA_NESTED },
 };
 
-static struct genl_family dp_vport_genl_family = {
+struct genl_family dp_vport_genl_family = {
 	.id = GENL_ID_GENERATE,
 	.hdrsize = sizeof(struct ovs_header),
 	.name = OVS_VPORT_FAMILY,
@@ -1616,7 +1616,7 @@ static int ovs_vport_cmd_new(struct sk_buff *skb, struct genl_info *info)
 		ovs_dp_detach_port(vport);
 		goto exit_unlock;
 	}
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_vport_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_vport_multicast_group.id, info->nlhdr, GFP_KERNEL);
 
 exit_unlock:
@@ -1656,7 +1656,7 @@ static int ovs_vport_cmd_set(struct sk_buff *skb, struct genl_info *info)
 		goto exit_unlock;
 	}
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_vport_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_vport_multicast_group.id, info->nlhdr, GFP_KERNEL);
 
 exit_unlock:
@@ -1690,7 +1690,7 @@ static int ovs_vport_cmd_del(struct sk_buff *skb, struct genl_info *info)
 
 	ovs_dp_detach_port(vport);
 
-	genl_notify(reply, genl_info_net(info), info->snd_pid,
+	genl_notify(&dp_vport_genl_family, reply, genl_info_net(info), info->snd_pid,
 		    ovs_dp_vport_multicast_group.id, info->nlhdr, GFP_KERNEL);
 
 exit_unlock:
