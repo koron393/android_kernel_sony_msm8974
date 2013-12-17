@@ -748,6 +748,14 @@ static int msm_compr_open(struct snd_compr_stream *cstream)
 		kfree(prtd);
 		return -ENOMEM;
 	}
+	pdata->dec_params[rtd->dai_link->be_id] =
+		 kzalloc(sizeof(struct msm_compr_dec_params), GFP_KERNEL);
+	if (!pdata->dec_params[rtd->dai_link->be_id]) {
+		pr_err("%s: Could not allocate memory for dec params\n",
+			__func__);
+		kfree(prtd);
+		return -ENOMEM;
+	}
 	prtd->audio_client = q6asm_audio_client_alloc(
 				(app_cb)compr_event_handler, prtd);
 	if (!prtd->audio_client) {
@@ -2025,6 +2033,16 @@ static int msm_compr_audio_effects_config_info(struct snd_kcontrol *kcontrol,
 {
 	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
 	uinfo->count = MAX_PP_PARAMS_SZ;
+	uinfo->value.integer.min = 0;
+	uinfo->value.integer.max = 0xFFFFFFFF;
+	return 0;
+}
+
+static int msm_compr_dec_params_info(struct snd_kcontrol *kcontrol,
+				     struct snd_ctl_elem_info *uinfo)
+{
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+	uinfo->count = 128;
 	uinfo->value.integer.min = 0;
 	uinfo->value.integer.max = 0xFFFFFFFF;
 	return 0;
