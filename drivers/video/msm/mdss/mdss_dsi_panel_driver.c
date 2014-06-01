@@ -27,6 +27,10 @@
 #include <linux/regulator/consumer.h>
 #include <linux/display_state.h>
 
+#ifdef CONFIG_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
+
 #include "mdss_mdp.h"
 #include "mdss_dsi.h"
 
@@ -332,6 +336,10 @@ static int mdss_dsi_panel_reset_seq(struct mdss_panel_data *pdata, int enable)
 		pr_err("%s: Invalid input data\n", __func__);
 		return -EINVAL;
 	}
+
+#ifdef CONFIG_POWERSUSPEND
+	set_power_suspend_state_pannel_hook(POWER_SUSPEND_INACTIVE);
+#endif
 
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
@@ -1215,6 +1223,10 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	}
 
 	display_on = false;
+
+#ifdef CONFIG_POWERSUSPEND
+	set_power_suspend_state_pannel_hook(POWER_SUSPEND_ACTIVE);
+#endif
 
 	pr_debug("%s: Done\n", __func__);
 
