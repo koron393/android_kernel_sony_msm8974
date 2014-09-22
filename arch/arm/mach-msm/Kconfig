@@ -1989,6 +1989,12 @@ config OC_ULTIMATE
 	help
 	  Unlock the ultimate Overclock freq speed @ 2.419 GHz
 
+config MSM_CPU_VOLTAGE_CONTROL
+	bool "Userspace CPU Voltage Control"
+	default y
+	help
+	  This enables userspace CPU Voltage Control.
+
 config MSM_AVS_HW
 	bool "Enable Adaptive Voltage Scaling (AVS)"
 	default n
