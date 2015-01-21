@@ -369,7 +369,7 @@ int q6asm_media_format_block_amrwbplus(struct audio_client *ac,
 			struct asm_amrwbplus_cfg *cfg);
 
 int q6asm_stream_media_format_block_flac(struct audio_client *ac,
-			struct asm_flac_cfg *cfg);
+			struct asm_flac_cfg *cfg, int stream_id);
 
 int q6asm_ds1_set_endp_params(struct audio_client *ac,
 				int param_id, int param_value);

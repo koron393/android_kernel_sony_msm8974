@@ -3256,7 +3256,7 @@ fail_cmd:
 }
 
 int q6asm_stream_media_format_block_flac(struct audio_client *ac,
-				struct asm_flac_cfg *cfg)
+				struct asm_flac_cfg *cfg, int stream_id)
 {
 	struct asm_flac_fmt_blk_v2 fmt;
 	int rc = 0;
