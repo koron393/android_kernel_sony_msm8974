@@ -336,6 +336,7 @@ static void msm_pcm_routing_build_matrix(int fedai_id, int dspst_id,
 	if (payload.num_copps) {
 		adm_matrix_map(dspst_id, path_type,
 			payload.num_copps, payload.copp_ids, 0, perf_mode);
+	}
 }
 
 void msm_pcm_routing_reg_psthr_stream(int fedai_id, int dspst_id,
