@@ -607,7 +607,7 @@ module_param(pvs_config_ver, uint, S_IRUGO);
 
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
 
-#define CPU_VDD_MIN	 600
+#define CPU_VDD_MIN	 465
 #define CPU_VDD_MAX	1450
 
 extern bool is_used_by_scaling(unsigned int freq);
