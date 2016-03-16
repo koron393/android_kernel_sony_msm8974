@@ -1123,6 +1123,8 @@ static ssize_t dbg_force_ov0_blt_write(
 	debug_buf[count] = 0;	/* end of string */
 
 	cnt = sscanf(debug_buf, "%x", &dbg_force_ov0_blt);
+	if (cnt != 1)
+	  return -EFAULT;
 
 	pr_info("%s: dbg_force_ov0_blt = %x\n",
 		__func__, dbg_force_ov0_blt);
@@ -1186,6 +1188,8 @@ static ssize_t dbg_force_ov1_blt_write(
 	debug_buf[count] = 0;	/* end of string */
 
 	cnt = sscanf(debug_buf, "%x", &dbg_force_ov1_blt);
+	if (cnt != 1)
+		return -EFAULT;
 
 	pr_info("%s: dbg_force_ov1_blt = %x\n",
 		__func__, dbg_force_ov1_blt);
