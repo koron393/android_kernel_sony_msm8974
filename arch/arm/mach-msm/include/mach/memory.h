@@ -21,10 +21,18 @@
 #define PLAT_PHYS_OFFSET UL(CONFIG_PHYS_OFFSET)
 
 #if defined(CONFIG_KEXEC_HARDBOOT)
-#if defined(CONFIG_MACH_SONY_SHINANO)
-#define KEXEC_HB_PAGE_ADDR		UL(0x00000000)
+#if defined(CONFIG_MACH_SONY_SIRIUS) ||  defined(CONFIG_MACH_SONY_LEO) ||  defined(CONFIG_MACH_SONY_SCORPION) ||  defined(CONFIG_MACH_SONY_SCORPION_WINDY) ||  defined(CONFIG_MACH_SONY_CASTOR)  ||  defined(CONFIG_MACH_SONY_CASTOR_WINDY)
+#define KEXEC_HB_PAGE_ADDR		UL(0x80200000)
+#else
+#if defined(CONFIG_MACH_SONY_ARIES)
+#define KEXEC_HB_PAGE_ADDR		UL(0x34300000)
+#else
+#if defined(CONFIG_MACH_SONY_AMAMI_ROW) ||  defined(CONFIG_MACH_SONY_HONAMI_ROW)
+#define KEXEC_HB_PAGE_ADDR		UL(0x40200000)
 #else
 #error "Adress for kexec hardboot page not defined"
+#endif
+#endif
 #endif
 #endif
 
