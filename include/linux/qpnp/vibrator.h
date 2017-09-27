@@ -35,5 +35,5 @@ static inline int qpnp_vibrator_config(struct qpnp_vib_config *vib_config)
 	return -ENODEV;
 }
 #endif
-
+void vibrate(int time);
 #endif /* __QPNP_VIBRATOR_H__ */

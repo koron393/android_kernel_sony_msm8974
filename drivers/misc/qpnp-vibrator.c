@@ -300,6 +300,11 @@ static struct device_attribute qpnp_vib_attr =
 	__ATTR(qpnp_vib, S_IWUSR | S_IRUGO,
 	qpnp_vib_attrs_show, qpnp_vib_attrs_store);
 
+void vibrate(int time)
+{
+	qpnp_vib_enable(&vib_dev->timed_dev, time);
+}
+
 static int qpnp_vib_get_time(struct timed_output_dev *dev)
 {
 	struct qpnp_vib *vib = container_of(dev, struct qpnp_vib,
