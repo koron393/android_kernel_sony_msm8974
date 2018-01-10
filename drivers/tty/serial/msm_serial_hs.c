@@ -2578,7 +2578,9 @@ struct msm_serial_hs_platform_data
 		return ERR_PTR(-EINVAL);
 	}
 #ifdef CONFIG_MACH_SONY_SHINANO
+#ifdef CONFIG_BT_PROTOCOL_DRIVER
 	pdata->exit_lpm_cb = bcm_bt_lpm_exit_lpm_locked;
+#endif
 #endif
 	MSM_HS_DBG("tx_ep_pipe_index:%d rx_ep_pipe_index:%d\n"
 		"tx_gpio:%d rx_gpio:%d rfr_gpio:%d cts_gpio:%d",
