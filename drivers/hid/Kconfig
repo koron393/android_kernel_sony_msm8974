@@ -34,7 +34,7 @@ config HID
 config HID_BATTERY_STRENGTH
 	bool
 	depends on HID && POWER_SUPPLY && HID = POWER_SUPPLY
-	default n
+	default y
 
 config HIDRAW
 	bool "/dev/hidraw raw HID device support"
