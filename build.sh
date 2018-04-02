@@ -56,12 +56,10 @@ function build() {
 	echo -e "Building kernel...$nocol";
 	make O=output -j${JOBS} CONFIG_NO_ERROR_ON_MISMATCH=y;
 	make O=output -j${JOBS} dtbs;
-	# DTB compiling doesn't work for now. Finding a solution....
-	#gcc -o ${KERNEL_PATH}/scripts/dtbTool ${KERNEL_PATH}/scripts/dtbtool.c
-	#./scripts/dtbTool -v -o dt.img -s 2048 -p ${KERNEL_PATH}/scripts/dtc/ $(pwd)/output/arch/arm/boot/
+	gcc -o ${KERNEL_PATH}/scripts/dtbTool ${KERNEL_PATH}/scripts/dtbtool.c
+	./scripts/dtbTool -o ${DT_IMG} -s 2048 $(pwd)/output/arch/arm/boot/
 	find ${KERNEL_PATH} -name "zImage" -exec mv -f {} ${KERNEL_ZIP}/tools \;
 	find ${KERNEL_PATH} -name "*.ko" -exec mv -f {} ${MODULES_PATH} \;
-	find ${KERNEL_PATH} -name "dt.img" -exec mv -f {} ${KERNEL_ZIP}/tools \;
 
 	BUILD_END=$(date +"%s");
 	DIFF=$(($BUILD_END - $BUILD_START));
