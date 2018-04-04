@@ -4293,7 +4293,7 @@ static int __devinit clearpad_probe(struct platform_device *pdev)
 		memcpy(&this->easy_wakeup_config,
 			this->pdata->easy_wakeup_config,
 			sizeof(this->easy_wakeup_config));
-	this->easy_wakeup_config.gesture_enable = true;
+	this->easy_wakeup_config.gesture_enable = false;
 	this->easy_wakeup_config.timeout_delay = DOUBLE_TAP_TO_WAKE_TIMEOUT;
 #ifdef CONFIG_TOUCHSCREEN_CLEARPAD_RMI_DEV
 	if (!cdata->rmi_dev) {
