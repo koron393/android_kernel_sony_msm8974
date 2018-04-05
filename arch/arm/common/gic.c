@@ -47,6 +47,8 @@
 #include <asm/hardware/gic.h>
 #include <asm/system.h>
 
+#include <linux/wakeup_reason.h>
+
 #include <mach/socinfo.h>
 #include <mach/msm_rtb.h>
 
