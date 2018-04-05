@@ -102,7 +102,7 @@ function main() {
 	read -p "Please specify Toolchain path: " tcpath;
 	if [ "${tcpath}" == "" ]; then
 		echo -e "$red"
-		export CROSS_COMPILE=/home/natsume/toolchain/arm-eabi-4.8/bin/arm-eabi-;
+		export CROSS_COMPILE=/home/natsume/toolchain/linaro-4.9-a15/bin/arm-eabi-;
 		echo -e "No toolchain path found. Using default local one:$nocol ${CROSS_COMPILE}";
 	else
 		export CROSS_COMPILE=${tcpath};
