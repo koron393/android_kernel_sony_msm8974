@@ -11,7 +11,7 @@ set -e -o pipefail
 
 DEFCONFIG=lineageos_rhine_honami_row_defconfig
 NAME=RZ_kernel
-VERSION=v1.0
+VERSION=v1.5
 
 export ARCH=arm
 export LOCALVERSION=-${VERSION}
