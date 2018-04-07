@@ -23,6 +23,10 @@
 #include <mach/scm.h>
 #include "governor.h"
 
+#ifdef CONFIG_ADRENO_IDLER
+#include "adreno_idler.h"
+#endif
+
 static DEFINE_SPINLOCK(tz_lock);
 
 /*
@@ -90,10 +94,6 @@ extern int simple_gpu_algorithm(int level,
 				struct devfreq_msm_adreno_tz_data *priv);
 #endif
 
-#ifdef CONFIG_ADRENO_IDLER
-extern int adreno_idler(struct devfreq_dev_status stats, struct devfreq *devfreq,
-		 unsigned long *freq);
-#endif
 static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 				u32 *flag)
 {
@@ -135,7 +135,8 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 	}
 
 #ifdef CONFIG_ADRENO_IDLER
-	if (adreno_idler(stats, devfreq, freq)) {
+       if (adreno_idler_active &&
+                       adreno_idler(stats, devfreq, freq)) {
 		/* adreno_idler has asked to bail out now */
 		return 0;
 	}
