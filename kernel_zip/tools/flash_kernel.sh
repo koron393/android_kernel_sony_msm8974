@@ -13,8 +13,35 @@
 #
 # Please maintain this if you use this script or any part of it
 
-cd /tmp/
-/sbin/busybox dd if=/dev/block/mmcblk0p14 of=./boot.img
-./unpackbootimg -i /tmp/boot.img
-./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1 vmalloc=300M dwc3.maximum_speed=high dwc3_msm.prop_chg_detect=Y androidboot.selinux=permissive" --base 0x00000000 --pagesize 2048 --ramdisk_offset 0x02000000 --tags_offset 0x01E00000 --dt /tmp/dt.img -o /tmp/newboot.img
-/sbin/busybox dd if=/tmp/newboot.img of=/dev/block/mmcblk0p14
+# Head to the build tools extracted folder
+cd /tmp;
+
+# Get current boot.img first then unpack it
+dd if=/dev/block/platform/msm_sdcc.1/by-name/boot of=/tmp/boot.img;
+./unpackbootimg -i /tmp/boot.img;
+
+# Initialize boot.img's properties
+base=$(cat *-base);
+cmdline=$(cat *-cmdline);
+pagesize=$(cat *-pagesize);
+ramdisk_offset=$(cat *-ramdisk_offset);
+tags_offset=$(cat *-tags_offset);
+
+## Extract ramdisk
+mkdir -p /tmp/ramdisk;
+cd /tmp/ramdisk;
+# Here we only support gzip ramdisk, as it's begin widely used
+gunzip -c ../boot.img-ramdisk.gz | $bb cpio -i;
+
+# Pack ramdisk with RZ's extra rc file
+cp /tmp/ramdisk-RZ/* /tmp/ramdisk;
+sed -i 's:init.qcom.power.rc:init.RZ.rc:g' /tmp/ramdisk/init.qcom.rc;
+cd /tmp;
+./mkbootfs /tmp/ramdisk/ > /tmp/boot.img-ramdisk;
+cat /tmp/boot.img-ramdisk | gzip > /tmp/boot.img-ramdisk.gz
+
+# Pack our new boot.img
+./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "$cmdline androidboot.selinux=permissive" --base $base --pagesize $pagesize --ramdisk_offset /tmp/ramdisk_offset --tags_offset $tags_offset --dt /tmp/dt.img -o /tmp/newboot.img;
+
+# It's flashing time!!
+dd if=/tmp/newboot.img of=/dev/block/platform/msm_sdcc.1/by-name/boot;
