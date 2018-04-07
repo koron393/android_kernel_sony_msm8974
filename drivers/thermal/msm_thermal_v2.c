@@ -58,7 +58,7 @@ static struct task_struct *freq_mitigation_task;
 static struct completion hotplug_notify_complete;
 static struct completion freq_mitigation_complete;
 
-static int enabled = 1;
+static int enabled;
 static int rails_cnt;
 static int psm_rails_cnt;
 static int ocr_rail_cnt;
@@ -1948,7 +1948,7 @@ int __devinit msm_thermal_init(struct msm_thermal_data *pdata)
 	disable_msm_thermal();
 	hotplug_init();
 	freq_mitigation_init();
-	enabled = 1;
+	enabled = 0;
 
 	return ret;
 }
