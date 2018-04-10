@@ -98,6 +98,8 @@ on enable-low-power
 
 on boot
     trigger enable-low-power
+    # Stop thermanager for intellithermal
+    stop thermanager
 
 on property:init.svc.recovery=running
     trigger enable-low-power
