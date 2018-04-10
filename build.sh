@@ -11,7 +11,7 @@ set -e -o pipefail
 
 DEFCONFIG=lineageos_rhine_honami_row_defconfig
 NAME=RZ_kernel
-VERSION=v1.5
+VERSION=v2.0
 
 export ARCH=arm
 export LOCALVERSION=-${VERSION}
@@ -102,7 +102,7 @@ function main() {
 	read -p "Please specify Toolchain path: " tcpath;
 	if [ "${tcpath}" == "" ]; then
 		echo -e "$red"
-		export CROSS_COMPILE=/home/natsume/toolchain/linaro-4.9-a15/bin/arm-eabi-;
+		export CROSS_COMPILE=/home/natsume/toolchain/uber-4.9-a15/bin/arm-eabi-;
 		echo -e "No toolchain path found. Using default local one:$nocol ${CROSS_COMPILE}";
 	else
 		export CROSS_COMPILE=${tcpath};
