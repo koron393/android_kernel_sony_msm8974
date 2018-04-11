@@ -9,7 +9,6 @@
 
 set -e -o pipefail
 
-DEFCONFIG=lineageos_rhine_honami_row_defconfig
 NAME=RZ_kernel
 VERSION=v2.0
 
@@ -57,7 +56,7 @@ function build() {
 	make O=output -j${JOBS} CONFIG_NO_ERROR_ON_MISMATCH=y;
 	make O=output -j${JOBS} dtbs;
 	gcc -o ${KERNEL_PATH}/scripts/dtbTool ${KERNEL_PATH}/scripts/dtbtool.c
-	./scripts/dtbTool -o ${DT_IMG} -s 2048 $(pwd)/output/arch/arm/boot/
+	${DTBTOOL_CMD};
 	find ${KERNEL_PATH} -name "zImage" -exec mv -f {} ${KERNEL_ZIP}/tools \;
 	find ${KERNEL_PATH} -name "*.ko" -exec mv -f {} ${MODULES_PATH} \;
 
@@ -97,6 +96,36 @@ function clean() {
 	echo -e "Done!$nocol";
 }
 
+function menu() {
+	echo;
+	echo -e "*********************************************";
+	echo "      RZ Kernel for ${DEVICE}";
+	echo -e "*********************************************";
+	echo "Choices:";
+	echo "1. Cleanup source";
+	echo "2. Build kernel";
+	echo "3. Build kernel then make flashable ZIP";
+	echo "4. Make flashable ZIP package";
+	echo "Leave empty to exit this script (it'll show invalid choice)";
+}
+
+function select_device() {
+	echo "Select which device you want to build for";
+	echo "1. Sony Xperia Z1 (honami)";
+	echo "2. Sony Xperia Z3 (leo)";
+	read -n 1 -p "Choice: " -s device;	
+	case ${device} in
+		1) export DEFCONFIG=lineageos_rhine_honami_row_defconfig
+		   export DEVICE="Sony Xperia Z1 (honami)"
+		   export DTBTOOL_CMD="./scripts/dtbTool -o ${DT_IMG} -s 2048 $(pwd)/output/arch/arm/boot/"
+		   menu;;
+		2) export DEFCONFIG=lineageos_shinano_leo_defconfig
+		   export DEVICE="Sony Xperia Z3 (leo)"
+		   export DTBTOOL_CMD="./scripts/dtbTool -o ${DT_IMG} -2 -s 2048 $(pwd)/output/arch/arm/boot/"
+		   menu;;
+	esac
+}
+
 function main() {
 	clear;
 	read -p "Please specify Toolchain path: " tcpath;
@@ -117,15 +146,7 @@ function main() {
 		echo -e "You have enabled ccache through *export USE_CCACHE=1*, now using ccache...$nocol";
 	fi;
 
-	echo -e "*********************************************";
-	echo "      RZ Kernel for Sony Xperia Z1 (honami)";
-	echo -e "*********************************************";
-	echo "Choices:";
-	echo "1. Cleanup source";
-	echo "2. Build kernel";
-	echo "3. Build kernel then make flashable ZIP";
-	echo "4. Make flashable ZIP package";
-	echo "Leave empty to exit this script (it'll show invalid choice)";
+	select_device;
 
 	read -n 1 -p "Select your choice: " -s choice;
 	case ${choice} in
