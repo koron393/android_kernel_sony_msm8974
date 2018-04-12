@@ -34,7 +34,7 @@ cd /tmp/ramdisk;
 gunzip -c ../boot.img-ramdisk.gz | $bb cpio -i;
 
 # Pack ramdisk with RZ's extra rc file
-cp /tmp/ramdisk-RZ/* /tmp/ramdisk;
+cp -f /tmp/ramdisk-RZ/* /tmp/ramdisk;
 sed -i 's:init.qcom.power.rc:init.RZ.rc:g' /tmp/ramdisk/init.qcom.rc;
 cd /tmp;
 ./mkbootfs /tmp/ramdisk/ > /tmp/boot.img-ramdisk;
