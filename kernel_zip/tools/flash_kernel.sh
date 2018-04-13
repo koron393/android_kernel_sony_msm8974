@@ -41,7 +41,7 @@ cd /tmp;
 cat /tmp/boot.img-ramdisk | gzip > /tmp/boot.img-ramdisk.gz
 
 # Pack our new boot.img
-./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "$cmdline" --base $base --pagesize $pagesize --ramdisk_offset /tmp/ramdisk_offset --tags_offset $tags_offset --dt /tmp/dt.img -o /tmp/newboot.img;
+./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "$cmdline androidboot.selinux=permissive" --base $base --pagesize $pagesize --ramdisk_offset /tmp/ramdisk_offset --tags_offset $tags_offset --dt /tmp/dt.img -o /tmp/newboot.img;
 
 # It's flashing time!!
 dd if=/tmp/newboot.img of=/dev/block/platform/msm_sdcc.1/by-name/boot;
