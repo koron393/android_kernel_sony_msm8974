@@ -1,8 +1,0 @@
-# RZ's init scripts
-import /init.qcom.power.RZ.rc
-
-service RZ /system/etc/RZ.sh
-    class main
-    user root
-    oneshot
-
