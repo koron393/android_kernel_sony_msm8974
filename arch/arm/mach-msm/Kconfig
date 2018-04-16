@@ -1976,12 +1976,6 @@ config MSM_DEVFREQ_CPUBW
 	  agnostic interface to so that some of the devfreq governors can be
 	  shared across SoCs.
 
-config CPU_VOLTAGE_TABLE
-	bool "Enable CPU Voltage Table via sysfs for adjustements"
-	default y
-	help
-	  DTS based kernel User Votlage Control
-
 config CPU_OC
 	bool "allow 2.3 GHz OC bin"
 	default n
