@@ -3,12 +3,6 @@ on boot
     stop thermanager
 
 on nonencrypted
-    # RZ's minimum freq is 286MHz
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 268800
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 268800
-
     # zzmoove tunables
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "zzmoove"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "zzmoove"
@@ -43,6 +37,12 @@ on nonencrypted
     write /sys/module/msm_thermal_v2/parameters/limit_temp_degC 70
 
 on property:dev.bootcomplete=1
+    # RZ's minimum freq is 268MHz
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 268800
+
     # Set max mA current for usb/dc charger
     write /sys/class/power_supply/qpnp-dc/current_max 1800000
     write /sys/class/power_supply/usb/current_max 1500000
