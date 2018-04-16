@@ -3,12 +3,19 @@ on boot
     stop thermanager
 
 on nonencrypted
-    # Default zzmoove governor
+    # RZ's minimum freq is 286MHz
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 268800
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 268800
+
+    # zzmoove tunables
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "zzmoove"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "zzmoove"
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "zzmoove"
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "zzmoove"
     write /sys/devices/system/cpu/cpufreq/zzmoove/profile_number 4
+    write /sys/devices/system/cpu/cpufreq/zzmoove/scaling_responsiveness_freq 883200
 
     # intelliactive tunables
     #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "intelliactive"
@@ -23,7 +30,7 @@ on nonencrypted
     #write /sys/devices/system/cpu/cpufreq/intelliactive/min_sample_time 40000
     #write /sys/devices/system/cpu/cpufreq/intelliactive/sampling_down_factor 100000
     #write /sys/devices/system/cpu/cpufreq/intelliactive/timer_rate 30000
-    
+
     # intelli_plug tunables
     write /sys/module/intelli_plug/parameters/intelli_plug_active 1
     write /sys/module/intelli_plug/parameters/cpu_nr_run_threshold 1000
