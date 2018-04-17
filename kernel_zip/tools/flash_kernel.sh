@@ -26,9 +26,16 @@ cmdline=$(cat *-cmdline);
 pagesize=$(cat *-pagesize);
 ramdisk_offset=$(cat *-ramdisk_offset);
 tags_offset=$(cat *-tags_offset);
+permissive="androidboot.selinux=permissive";
+
+if [ -n "$(grep "$permissive" *-cmdline)" ]; then
+      permissive="";
+else
+      true;
+fi;
 
 # Pack our new boot.img
-./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "$cmdline androidboot.selinux=permissive" --base $base --pagesize $pagesize --ramdisk_offset $ramdisk_offset --tags_offset $tags_offset --dt /tmp/dt.img -o /tmp/newboot.img;
+./mkbootimg --kernel /tmp/zImage --ramdisk /tmp/boot.img-ramdisk.gz --cmdline "$cmdline $permissive" --base $base --pagesize $pagesize --ramdisk_offset $ramdisk_offset --tags_offset $tags_offset --dt /tmp/dt.img -o /tmp/newboot.img;
 
 # It's flashing time!!
 dd if=/tmp/newboot.img of=/dev/block/platform/msm_sdcc.1/by-name/boot;
