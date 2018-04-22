@@ -475,7 +475,7 @@ config SWAP_ENABLE_READAHEAD
 config ZSWAP_ENABLE_WRITEBACK
 	bool "Enable writeback"
 	depends on ZSWAP
-	default n
+	default y
 
 config DIRECT_RECLAIM_FILE_PAGES_ONLY
 	bool "Reclaim file pages only on direct reclaim path"
