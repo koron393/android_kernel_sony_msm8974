@@ -4,26 +4,26 @@ on boot
 
 on nonencrypted
     # zzmoove tunables
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "zzmoove"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "zzmoove"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "zzmoove"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "zzmoove"
-    write /sys/devices/system/cpu/cpufreq/zzmoove/profile_number 4
-    write /sys/devices/system/cpu/cpufreq/zzmoove/scaling_responsiveness_freq 883200
+    #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "zzmoove"
+    #write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "zzmoove"
+    #write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "zzmoove"
+    #write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "zzmoove"
+    #write /sys/devices/system/cpu/cpufreq/zzmoove/profile_number 4
+    #write /sys/devices/system/cpu/cpufreq/zzmoove/scaling_responsiveness_freq 883200
 
     # intelliactive tunables
-    #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "intelliactive"
-    #write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "intelliactive"
-    #write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "intelliactive"
-    #write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "intelliactive"
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/above_hispeed_delay "19000 1400000:39000 1700000:19000"
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/go_hispeed_load 99
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/hispeed_freq 1190400
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/io_is_busy 0
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/target_loads "85 1497600:90 1728000:95"
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/min_sample_time 40000
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/sampling_down_factor 100000
-    #write /sys/devices/system/cpu/cpufreq/intelliactive/timer_rate 30000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "intelliactive"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "intelliactive"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "intelliactive"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "intelliactive"
+    write /sys/devices/system/cpu/cpufreq/intelliactive/above_hispeed_delay "19000 1400000:39000 1700000:19000"
+    write /sys/devices/system/cpu/cpufreq/intelliactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpufreq/intelliactive/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpufreq/intelliactive/io_is_busy 0
+    write /sys/devices/system/cpu/cpufreq/intelliactive/target_loads "85 1497600:90 1728000:95"
+    write /sys/devices/system/cpu/cpufreq/intelliactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/intelliactive/sampling_down_factor 100000
+    write /sys/devices/system/cpu/cpufreq/intelliactive/timer_rate 30000
 
     # intelli_plug tunables
     write /sys/module/intelli_plug/parameters/intelli_plug_active 1
