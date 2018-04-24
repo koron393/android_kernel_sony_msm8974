@@ -10,7 +10,7 @@
 set -e -o pipefail
 
 NAME=RZ_kernel
-VERSION=v2.0
+VERSION=v2.5
 
 export ARCH=arm
 export LOCALVERSION=-${VERSION}
