@@ -56,7 +56,17 @@ on property:dev.bootcomplete=1
     write /sys/class/power_supply/usb/current_max 1500000
 
     rm /data/system/perfd/default_values
-    setprop sys.io.scheduler "row"
+
+    # Overriding iosched from ramdisk
+    setprop sys.io.scheduler row
+    # In case the above doesn't work
+    write /sys/block/mmcblk0/queue/scheduler row
+    # Set separated iosched for SD card
+    write /sys/block/mmcblk1/queue/scheduler zen
+
+    write /sys/block/mmcblk0/queue/rq_affinity 0
+    write /sys/block/mmcblk1/queue/rq_affinity 0
+
     # Since we use kernel-space hotplug driver, we don't need mpdecision
     # now, so forcibly stop it (in case it's been started somewhere else)
     stop mpdecision
