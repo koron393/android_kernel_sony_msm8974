@@ -3,6 +3,16 @@ service sysinit_cm_override /system/bin/sysinit_cm
     disabled
     oneshot
 
+service vnswap /system/bin/sswap -s
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+
+on property:vnswap.enabled=true
+   start vnswap
+
 on boot
     # Initialize init.d on boot (if ROM doesn't support)
     start sysinit_cm_override
