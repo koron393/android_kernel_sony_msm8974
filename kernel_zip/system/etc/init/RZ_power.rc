@@ -1,4 +1,12 @@
+service sysinit_cm_override /system/bin/sysinit_cm
+    user root
+    disabled
+    oneshot
+
 on boot
+    # Initialize init.d on boot (if ROM doesn't support)
+    start sysinit_cm_override
+
     # Stop thermanager for intellithermal
     stop thermanager
     # RZ's minimum freq is 268MHz and maximum freq is 2,5GHz
