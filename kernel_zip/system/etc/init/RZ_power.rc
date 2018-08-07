@@ -1,7 +1,10 @@
-service sysinit_cm_override /system/bin/sysinit_cm
+service sysinit_cm /system/bin/sysinit_cm
+    class main
     user root
+    group root
     disabled
     oneshot
+    seclabel u:r:shell:s0
 
 service vnswap /system/bin/sswap -s
     class core
@@ -9,13 +12,14 @@ service vnswap /system/bin/sswap -s
     group root
     disabled
     oneshot
+    seclabel u:r:shell:s0
 
 on property:vnswap.enabled=true
-   start vnswap
+    start vnswap
 
 on boot
     # Initialize init.d on boot (if ROM doesn't support)
-    start sysinit_cm_override
+    start sysinit_cm
 
     # Stop thermanager for intellithermal
     stop thermanager
