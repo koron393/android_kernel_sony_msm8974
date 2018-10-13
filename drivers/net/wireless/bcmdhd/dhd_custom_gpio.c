@@ -237,17 +237,15 @@ const struct cntry_locales_custom translate_custom_table[] = {
 	{"SK", "SK", 1},
 	{"TR", "TR", 7},
 	{"TW", "TW", 1},
-	{"IR", "XZ", 11},	/* Universal if Country code is IRAN, (ISLAMIC REPUBLIC OF) */
-	{"SD", "XZ", 11},	/* Universal if Country code is SUDAN */
-	{"SY", "XZ", 11},	/* Universal if Country code is SYRIAN ARAB REPUBLIC */
-	{"GL", "XZ", 11},	/* Universal if Country code is GREENLAND */
-	{"PS", "XZ", 11},	/* Universal if Country code is PALESTINIAN TERRITORY, OCCUPIED */
-	{"TL", "XZ", 11},	/* Universal if Country code is TIMOR-LESTE (EAST TIMOR) */
-	{"MH", "XZ", 11},	/* Universal if Country code is MARSHALL ISLANDS */
-#ifdef BCM4330_CHIP
+	{"IR", "IR", 1},	/* Universal if Country code is IRAN, (ISLAMIC REPUBLIC OF) */
+	{"SD", "SD", 1},	/* Universal if Country code is SUDAN */
+	{"SY", "SY", 1},	/* Universal if Country code is SYRIAN ARAB REPUBLIC */
+	{"GL", "GL", 1},	/* Universal if Country code is GREENLAND */
+	{"PS", "PS", 1},	/* Universal if Country code is PALESTINIAN TERRITORY, OCCUPIED */
+	{"TL", "TL", 1},	/* Universal if Country code is TIMOR-LESTE (EAST TIMOR) */
+	{"MH", "MH", 1},	/* Universal if Country code is MARSHALL ISLANDS */
 	{"RU", "RU", 1},
-	{"US", "US", 5}
-#endif
+	{"US", "US", 1}
 #endif /* CUSTOMER_HW2 */
 };
 
