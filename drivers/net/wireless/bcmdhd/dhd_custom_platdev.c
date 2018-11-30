@@ -523,6 +523,15 @@ static struct cntry_locales_custom bcm4354_sdio_translate_sta_nodfs_table[] = {
 	{"TR", "E0", 26},
 	{"TW", "TW", 60},
 	{"ZA", "E0", 26},
+	{"RU", "RU", 26},
+	{"IR", "IR", 26},
+	{"SD", "SD", 26},
+	{"SY", "SY", 26},
+	{"GL", "GL", 26},
+	{"PS", "PS", 26},
+	{"TL", "TL", 26},
+	{"MH", "MH", 26},
+
 };
 
 static struct cntry_locales_custom bcm4356_pcie_translate_sta_dfs_table[] = {
