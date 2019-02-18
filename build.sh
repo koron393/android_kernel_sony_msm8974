@@ -131,7 +131,7 @@ function main() {
 	read -p "Please specify Toolchain path: " tcpath;
 	if [ "${tcpath}" == "" ]; then
 		echo -e "$red"
-		export CROSS_COMPILE=/home/natsume/toolchain/uber-4.9-a15/bin/arm-eabi-;
+		export CROSS_COMPILE=$(pwd)/uber-4.9-a15/bin/arm-eabi-;
 		echo -e "No toolchain path found. Using default local one:$nocol ${CROSS_COMPILE}";
 	else
 		export CROSS_COMPILE=${tcpath};
@@ -139,7 +139,7 @@ function main() {
 		echo -e "Specified toolchain path: $nocol ${CROSS_COMPILE}";
 	fi;
 	if [ "${USE_CCACHE}" == "1" ]; then
-		CCACHE_PATH=/usr/bin/ccache;
+		CCACHE_PATH=/usr/local/bin/ccache;
 		export CROSS_COMPILE="${CCACHE_PATH} ${CROSS_COMPILE}";
 		export JOBS=8;
 		echo -e "$red";
