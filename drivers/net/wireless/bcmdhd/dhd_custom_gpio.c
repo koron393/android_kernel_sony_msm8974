@@ -190,7 +190,6 @@ const struct cntry_locales_custom translate_custom_table[] = {
 #if defined(CUSTOMER_HW2)
 #if defined(BCM4335_CHIP)
 	{"",   "XZ", 11},  /* Universal if Country code is unknown or empty */
-#endif
 	{"AE", "AE", 1},
 	{"AR", "AR", 1},
 	{"AT", "AT", 1},
@@ -244,6 +243,7 @@ const struct cntry_locales_custom translate_custom_table[] = {
 	{"PS", "XZ", 11},	/* Universal if Country code is PALESTINIAN TERRITORY, OCCUPIED */
 	{"TL", "XZ", 11},	/* Universal if Country code is TIMOR-LESTE (EAST TIMOR) */
 	{"MH", "XZ", 11},	/* Universal if Country code is MARSHALL ISLANDS */
+#endif
 #ifdef BCM4330_CHIP
 	{"RU", "RU", 1},
 	{"US", "US", 5}
