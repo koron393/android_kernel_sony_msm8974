@@ -392,6 +392,7 @@ struct country_tables {
 
 static struct cntry_locales_custom bcm4354_sdio_translate_sta_dfs_table[] = {
 /* Table should be filled out based on custom platform regulatory requirement */
+#if 0
 	{"",   "XZ", 11},  /* Universal if Country code is unknown or empty */
 	{"US", "US", 0},
 	{"AE", "AE", 1},
@@ -458,9 +459,11 @@ static struct cntry_locales_custom bcm4354_sdio_translate_sta_dfs_table[] = {
 	{"PS", "XZ", 11},
 	{"TL", "XZ", 11},
 	{"MH", "XZ", 11},
+#endif
 };
 
 static struct cntry_locales_custom bcm4354_sdio_translate_sta_nodfs_table[] = {
+#if 0
 	{"",   "XZ", 40},  /* Universal if Country code is unknown or empty */
 	{"US", "US", 172},
 	{"AM", "E0", 26},
@@ -523,6 +526,7 @@ static struct cntry_locales_custom bcm4354_sdio_translate_sta_nodfs_table[] = {
 	{"TR", "E0", 26},
 	{"TW", "TW", 60},
 	{"ZA", "E0", 26},
+#endif
 };
 
 static struct cntry_locales_custom bcm4356_pcie_translate_sta_dfs_table[] = {
