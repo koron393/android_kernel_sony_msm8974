@@ -2065,10 +2065,6 @@
 		compatible = "qcom,msm-pcm-lpa";
 	};
 
-	qcom,msm-compr-dsp {
-		compatible = "qcom,msm-compr-dsp";
-	};
-
 	qcom,msm-compress-dsp {
 		compatible = "qcom,msm-compress-dsp";
 	};
